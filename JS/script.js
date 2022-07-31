@@ -1,4 +1,4 @@
-// <---- DOMS Constants ---->
+
 let b1 = document.getElementById("b1");
 let b2 = document.getElementById("b2");
 let b3 = document.getElementById("b3");
@@ -13,7 +13,7 @@ let row1 = document.getElementById("row1");
 let row2 = document.getElementById("row2");
 let row3 = document.getElementById("row3");
 
-// <---- Constants ---->
+
 const player1 = {
     "winConstant": "XXX",
     "score": 0,
@@ -27,98 +27,95 @@ let turnNumber = 0;
 
 const allBoxes = [ b1 , b2 , b3 , b4 , b5 , b6 , b7 , b8 , b9 ]
 
-// for( let i = 0 ; i < allBoxes.length ; i++){
-//     allBoxes[i].available = true;
-//     allBoxes[i].mark = 1;
-// };
-
-b1 = {
-    available : true,
-    mark : "PP"
-};
-b2 = {
-    available : true,
-    mark : "PP"
-};
-b3 = {
-    available : true,
-    mark : "PP"
-};
-b4 = {
-    available : true,
-    mark : "PP"
-};
-b5 = {
-    available : true,
-    mark : "PP"
-};
-b6 = {
-    available : true,
-    mark : "PP"
-};
-b7 = {
-    available : true,
-    mark : "PP"
-};
-b8 = {
-    available : true,
-    mark : "PP"
-};
-b9 = {
-    available : true,
-    mark : "PP"
+for ( let box of allBoxes){
+    box.setAttribute("mark", "nothing-yet");
+    box.setAttribute("avail", "yes");
 };
 
-const winningCombo = [
-    [ b1.mark , b2.mark , b3.mark],
-    [ b4.mark , b5.mark , b6.mark],
-    [ b7.mark , b8.mark , b9.mark],
-    [b1.mark , b4.mark , b7.mark],
-    [b2.mark , b5.mark , b8.mark],
-    [b3.mark , b6.mark , b9.mark],
-];
+// this shits not working here but fix later
+// const winningCombo = [
+//     [ b1.getAttribute("mark") , b2.getAttribute("mark") , b3.getAttribute("mark") ],
+// ];
 
-// <---- TEST ---->
-//TEST
+
+// TEST
 let testLine = document.getElementById("test-line");
 function testFunction(){
     testLine.innerText = Math.floor(Math.random()*20);
 };
-function testWinning(){
-    testLine.innerText = "IT WORKS!! WOWOWOWOW!";
-};
-
-
-
-// <---- First Move CLICK BOX ---->
-// Determining wheter the box you clicked is available (not X'ed or O'ed)
-for( let i = 0 ; i < allBoxes.length ; i++){
-    allBoxes[i].addEventListener("click" , function checkAvailable(){
-        if(allBoxes[i].available = true){
-            allBoxes[i].avaible = false;
-        }
-        determineXorO();
-    })
-};
-
-b1.innerText =
-
-
-// function // Determining Player and whether to mark X or O
-// if(playerTurn > 0){
-//     allBoxes[i].innerText = "X";
-
-//     console.log(
-    
-//     allBoxes[i]["mark"] = "X";
-// } else {
-//     allBoxes[i].innerText = "O";
-//     allBoxes[i].mark = "O";
+// function testWinning(){
+//     testLine.innerText = "IT WORKS!! WOWOWOWOW!";
 // };
-// testFunction();
-// // didYouWin();
-// })
 
-// console.log(b1.mark);
-// b1.mark = "TEST";
-// console.log(b1.mark);
+
+
+// FIRST CLICK - CHECK AVAIL
+
+for (let b of allBoxes){
+    b.addEventListener("click", function checkAvail(){
+			if(b.getAttribute("avail") === "yes"){
+				b.setAttribute("avail" , "no");
+				determinePlayerTurn(b);
+			}
+		})
+};
+
+
+
+function determinePlayerTurn(box){
+	if(playerTurn > 0){
+		box.innerText = "X";
+		box.setAttribute("mark", "X");
+	} else {
+		box.innerText = "O";
+		box.setAttribute("mark", "O");
+	}
+	didYouWin()
+};
+
+
+function didYouWin(){
+	if(b1.getAttribute("mark") + b2.getAttribute("mark") + b3.getAttribute("mark") === "XXX" ||
+		 b1.getAttribute("mark") + b2.getAttribute("mark") + b3.getAttribute("mark") === "OOO"){
+		alertWinner();
+	} else if(b4.getAttribute("mark") + b5.getAttribute("mark") + b6.getAttribute("mark") === "XXX" || 
+						b4.getAttribute("mark") + b5.getAttribute("mark") + b6.getAttribute("mark") === "OOO"){
+		alertWinner();
+	} else if(b7.getAttribute("mark") + b8.getAttribute("mark") + b9.getAttribute("mark") === "XXX" || 
+						b7.getAttribute("mark") + b8.getAttribute("mark") + b9.getAttribute("mark") === "OOO"){
+		alertWinner();
+	} else if(b1.getAttribute("mark") + b4.getAttribute("mark") + b7.getAttribute("mark") === "XXX" || 
+						b1.getAttribute("mark") + b4.getAttribute("mark") + b7.getAttribute("mark") === "OOO"){
+		alertWinner();
+	}	else if(b2.getAttribute("mark") + b5.getAttribute("mark") + b8.getAttribute("mark") === "XXX" || 
+						b2.getAttribute("mark") + b5.getAttribute("mark") + b8.getAttribute("mark") === "OOO"){
+		alertWinner();
+	} else if(b3.getAttribute("mark") + b6.getAttribute("mark") + b9.getAttribute("mark") === "XXX" || 
+						b3.getAttribute("mark") + b6.getAttribute("mark") + b9.getAttribute("mark") === "OOO"){
+		alertWinner();
+	} else if(b1.getAttribute("mark") + b5.getAttribute("mark") + b9.getAttribute("mark") === "XXX" || 
+						b1.getAttribute("mark") + b5.getAttribute("mark") + b9.getAttribute("mark") === "OOO"){
+		alertWinner();
+	} else if(b7.getAttribute("mark") + b5.getAttribute("mark") + b3.getAttribute("mark") === "XXX" || 
+						b7.getAttribute("mark") + b5.getAttribute("mark") + b3.getAttribute("mark") === "OOO"){
+		alertWinner();
+	} else {
+		endTurn();
+	}
+};
+
+console.log(playerTurn);
+
+function endTurn(){
+	(playerTurn *= -1);
+	console.log(playerTurn);
+};		
+
+function alertWinner(){
+	if( playerTurn > 0){
+		testLine.innerText = "Player 1 wins"
+	} else {
+		testLine.innerText = "Player 2 wins"
+	}
+};
+	
