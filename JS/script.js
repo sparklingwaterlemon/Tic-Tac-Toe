@@ -29,16 +29,17 @@ let gameStatus = 1;
 
 let allBoxes = [ b1 , b2 , b3 , b4 , b5 , b6 , b7 , b8 , b9 ]
 
+console.log("test");
+
 for ( let box of allBoxes){
     box.setAttribute("mark", "nothing-yet");
     box.setAttribute("avail", "yes");
 };
 
 console.log(b1.getAttribute("mark"));
-// this shits not working here but fix later
-// const winningCombo = [
-//     [ b1.getAttribute("mark") , b2.getAttribute("mark") , b3.getAttribute("mark") ],
-// ];
+console.log("test");
+
+
 
 
 // TEST
@@ -56,7 +57,7 @@ function testFunction(){
 
 for (let b of allBoxes){
     b.addEventListener("click", function checkAvail(){
-			if(b.getAttribute("avail" === "yes"){
+			if(b.getAttribute("avail") === "yes"){
 				b.setAttribute("avail" , "no");
 				determinePlayerTurn(b);
 			}
