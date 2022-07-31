@@ -56,7 +56,7 @@ function testFunction(){
 
 for (let b of allBoxes){
     b.addEventListener("click", function checkAvail(){
-			if(b.getAttribute("avail") === "yes"){
+			if(b.getAttribute("avail" === "yes"){
 				b.setAttribute("avail" , "no");
 				determinePlayerTurn(b);
 			}
