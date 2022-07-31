@@ -12,6 +12,7 @@ let b9 = document.getElementById("b9");
 let row1 = document.getElementById("row1");
 let row2 = document.getElementById("row2");
 let row3 = document.getElementById("row3");
+let button = document.querySelector("button");
 
 
 const player1 = {
@@ -24,14 +25,16 @@ const player2 = {
 };
 let playerTurn = 1;
 let turnNumber = 0;
+let gameStatus = 1;
 
-const allBoxes = [ b1 , b2 , b3 , b4 , b5 , b6 , b7 , b8 , b9 ]
+let allBoxes = [ b1 , b2 , b3 , b4 , b5 , b6 , b7 , b8 , b9 ]
 
 for ( let box of allBoxes){
     box.setAttribute("mark", "nothing-yet");
     box.setAttribute("avail", "yes");
 };
 
+console.log(b1.getAttribute("mark"));
 // this shits not working here but fix later
 // const winningCombo = [
 //     [ b1.getAttribute("mark") , b2.getAttribute("mark") , b3.getAttribute("mark") ],
@@ -63,14 +66,16 @@ for (let b of allBoxes){
 
 
 function determinePlayerTurn(box){
-	if(playerTurn > 0){
-		box.innerText = "X";
-		box.setAttribute("mark", "X");
-	} else {
-		box.innerText = "O";
-		box.setAttribute("mark", "O");
-	}
-	didYouWin()
+    if(gameStatus > 0){
+	    if(playerTurn > 0){
+		    box.innerText = "X";
+		    box.setAttribute("mark", "X");
+	    } else {
+		    box.innerText = "O";
+		    box.setAttribute("mark", "O");
+	    }
+	    didYouWin();
+    }
 };
 
 
@@ -112,10 +117,22 @@ function endTurn(){
 };		
 
 function alertWinner(){
+    gameStatus -= 1;
 	if( playerTurn > 0){
 		testLine.innerText = "Player 1 wins"
 	} else {
 		testLine.innerText = "Player 2 wins"
 	}
 };
-	
+
+button.addEventListener("click", function reset(){
+    playerTurn = 1;
+    turnNumber = 0;
+    gameStatus += 1;
+    testLine.innerText = "Results";
+    for(let i = 0 ; i < allBoxes.length ; i++){
+        allBoxes[i].innerText = ("B" + (i+1));
+        allBoxes[i].setAttribute("mark", "nothing-yet");
+        allBoxes[i].setAttribute("avail", "yes");
+    }
+});
